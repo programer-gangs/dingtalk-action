@@ -1,0 +1,41 @@
+name: 钉钉机器人消息发送
+description: 钉钉机器人消息发送
+
+inputs:
+  token:
+    description: '机器人令牌'
+    required: true
+  status:
+    description: '执行状态(-1 启动 0 成功 1 失败)'
+    required: true
+    default: -1
+
+runs:
+  using: composite
+  env:
+    color: ${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}
+    status_name: ${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}
+    extra: ${{ inputs.status >= 0 && '  \n**耗时**: 1分钟' || ''}}
+  steps:
+    - name: Sending Dingtalk Robot Message
+      uses: x-actions/dingtalk@master
+      env:
+        DINGTALK_ACCESS_TOKEN: ${{ inputs.token }}
+        MSGTYPE: actionCard
+        TITLE: "CI任务${{ status_name }}通知"
+        TEXT: |
+          {
+            "actionCard": {
+              "title": "${{ TITLE }}",
+              "text": "CI任务<font color=\"${{ color }}\">${{ status_name }}</font>通知**  \n项目: **${{ GITHUB_REPOSITORY }}**  \n分支: **${{ GITHUB_BASE_REF }}**  \n任务名: **${{ GITHUB_ACTION }}**  \n任务ID: **${{ GITHUB_JOB }}**  \n执行人: **${{ GITHUB_ACTOR }}**${{ extra }}",
+              "btnOrientation": "1",
+              "btns": [{
+                "title": "查看项目",
+                "actionURL": "dingtalk://dingtalkclient/page/link?url=&pc_slide=false"
+              },{
+                "title": "查看任务",
+                "actionURL": "dingtalk://dingtalkclient/page/link?url=&pc_slide=false"
+              }]
+            },
+            "msgtype": "actionCard"
+          }
