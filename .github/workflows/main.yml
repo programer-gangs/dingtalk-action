@@ -1,0 +1,15 @@
+name: 钉钉消息发送
+
+on: workflow_dispatch
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy: 
+      fail-fast: true
+    steps:
+      - name: Sending Dingtalk Message
+        uses: ./
+        with:
+          token: 9ed506ea97a847cbfcc00b435f749a30e13cc5585a827332748853a9070ad8bc
