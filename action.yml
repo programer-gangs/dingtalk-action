@@ -22,7 +22,6 @@ runs:
       env:
         DINGTALK_ACCESS_TOKEN: ${{ inputs.token }}
         MSGTYPE: actionCard
-        TITLE: "CI任务${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}通知"
         TEXT: |
           {
             "actionCard": {
