@@ -9,6 +9,8 @@ jobs:
     strategy: 
       fail-fast: true
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
       - name: Sending Dingtalk Message
         uses: ./
         with:
