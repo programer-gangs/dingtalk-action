@@ -29,9 +29,9 @@ runs:
               "btnOrientation": "1",
               "btns": [{
                 "title": "查看项目",
-                "actionURL": "https://github.com/${{ github.repository }}"
+                "actionURL": "dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Fgithub.com%2F${{ github.repository }}&pc_slide=false"
               },{
                 "title": "查看任务",
-                "actionURL": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                "actionURL": "dingtalk://dingtalkclient/page/link?url=https%3A%2F%2Fgithub.com%2F${{ github.repository }}/actions/runs/${{ github.run_id }}&pc_slide=false"
               }]
           }
