@@ -14,11 +14,6 @@ inputs:
     required: true
     default: -1
 
-env:
-  color: ${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}
-  status_name: ${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}
-  extra: ${{ inputs.status >= 0 && '  \n**耗时**: 1分钟' || '' }}
-
 runs:
   using: composite
   steps:
@@ -27,12 +22,12 @@ runs:
       env:
         DINGTALK_ACCESS_TOKEN: ${{ inputs.token }}
         MSGTYPE: actionCard
-        TITLE: "CI任务${{ status_name }}通知"
+        TITLE: "CI任务${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}通知"
         TEXT: |
           {
             "actionCard": {
               "title": "${{ TITLE }}",
-              "text": "CI任务<font color=\"${{ color }}\">${{ status_name }}</font>通知**  \n项目: **${{ GITHUB_REPOSITORY }}**  \n分支: **${{ GITHUB_BASE_REF }}**  \n任务名: **${{ GITHUB_ACTION }}**  \n任务ID: **${{ GITHUB_JOB }}**  \n执行人: **${{ GITHUB_ACTOR }}**${{ extra }}",
+              "text": "CI任务<font color=\"${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}\">${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}</font>通知**  \n项目: **${{ GITHUB_REPOSITORY }}**  \n分支: **${{ GITHUB_BASE_REF }}**  \n任务名: **${{ GITHUB_ACTION }}**  \n任务ID: **${{ GITHUB_JOB }}**  \n执行人: **${{ GITHUB_ACTOR }}**${{ inputs.status >= 0 && '  \n**耗时**: 1分钟' || '' }}",
               "btnOrientation": "1",
               "btns": [{
                 "title": "查看项目",
