@@ -17,7 +17,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: 
     - name: Sending Dingtalk Robot Message
       uses: wow-actions/dingtalk-notify@v1
       with:
