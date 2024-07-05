@@ -17,6 +17,17 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: |
+        if [ -z "${{ env.START_TIME }}" ]; then
+          START_TIME=$(date +%s)
+          echo "START_TIME=$START_TIME" >> $GITHUB_ENV
+        else
+          start_time=${{ env.START_TIME }}
+          end_time=$(date +%s)
+          seconds=$((end_time - start_time))
+          echo "EXTRA="  \n耗时: **$[seconds/60]分$[seconds%60]秒**""
+        fi
+      shell: bash
     - name: Sending Dingtalk Robot Message
       uses: wow-actions/dingtalk-notify@v1
       with:
