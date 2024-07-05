@@ -21,7 +21,7 @@ runs:
       uses: x-actions/dingtalk@v2
       env:
         DINGTALK_ACCESS_TOKEN: ${{ inputs.token }}
-        MSGTYPE: actionCard
+        MSGTYPE: 'actionCard'
         TEXT: |
           {
             "actionCard": {
