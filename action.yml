@@ -10,9 +10,9 @@ inputs:
     description: '机器人令牌'
     required: true
   status:
-    description: '执行状态(-2 取消 -1 启动 0 成功 1 失败)'
+    description: '执行状态(cancelled 取消 started 启动 success 成功 failure 失败)'
     required: true
-    default: -1
+    default: 'started'
 
 runs:
   using: composite
@@ -24,8 +24,8 @@ runs:
         msgtype: 'actionCard'
         content: |
           {
-              "title": "CI任务${{ inputs.status < 0 && (inputs.status == -1 && '启动' || '取消') || (inputs.status == 0 && '执行成功' || '执行失败') }}通知",
-              "text": "**CI任务<font color='${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}'>${{ inputs.status < 0 && (inputs.status == -1 && '启动' || '取消') || (inputs.status == 0 && '执行成功' || '执行失败') }}</font>通知**  \n  项目: **${{ github.repository }}**  \n  分支: **${{ github.ref_name }}**  \n  任务名: **${{ github.job }}**  \n  任务ID: **${{ github.run_id }}**  \n  执行人: **${{ github.triggering_actor }}**${{ inputs.status >= 0 && '  \n  **耗时**: 1分钟' || '' }}",
+              "title": "CI任务${{ inputs.status == 'success' && '执行成功' || (inputs.status == 'cancelled' && '取消' || (inputs.status == 'failure' && '执行失败' || '启动')) }} 通知",
+              "text": "**CI任务<font color='${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}'>${{ inputs.status == 'success' && '执行成功' || (inputs.status == 'cancelled' && '取消' || (inputs.status == 'failure' && '执行失败' || '启动')) }}</font>通知**  \n  项目: **${{ github.repository }}**  \n  分支: **${{ github.ref_name }}**  \n  任务名: **${{ github.job }}**  \n  任务ID: **${{ github.run_id }}**  \n  执行人: **${{ github.triggering_actor }}**${{ inputs.status >= 0 && '  \n  **耗时**: 1分钟' || '' }}",
               "btnOrientation": "1",
               "btns": [{
                 "title": "查看项目",
