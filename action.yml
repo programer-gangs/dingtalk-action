@@ -37,7 +37,7 @@ runs:
         content: |
           {
               "title": "CI任务${{ inputs.status == 'success' && '执行成功' || (inputs.status == 'cancelled' && '取消' || (inputs.status == 'failure' && '执行失败' || '启动')) }} 通知",
-              "text": "**CI任务<font color='${{ inputs.status == 'success' && '#33CC00' || (inputs.status == 'cancelled' && '#D3D3D3' || (inputs.status == 'failure' && '#FF3333' || '#FF9900')) }}'>${{ inputs.status == 'success' && '执行成功' || (inputs.status == 'cancelled' && '取消' || (inputs.status == 'failure' && '执行失败' || '启动')) }}</font>通知**  \n  项目: **${{ github.repository }}**  \n  分支: **${{ github.ref_name }}**  \n  任务名: **${{ github.job }}**  \n  任务ID: **${{ github.run_id }}**  \n  执行人: **${{ github.triggering_actor }}**${{ inputs.status >= 0 && '${{ EXTRA }}' || '' }}",
+              "text": "**CI任务<font color='${{ inputs.status == 'success' && '#33CC00' || (inputs.status == 'cancelled' && '#D3D3D3' || (inputs.status == 'failure' && '#FF3333' || '#FF9900')) }}'>${{ inputs.status == 'success' && '执行成功' || (inputs.status == 'cancelled' && '取消' || (inputs.status == 'failure' && '执行失败' || '启动')) }}</font>通知**  \n  项目: **${{ github.repository }}**  \n  分支: **${{ github.ref_name }}**  \n  任务名: **${{ github.job }}**  \n  任务ID: **${{ github.run_id }}**  \n  执行人: **${{ github.triggering_actor }}**${{ inputs.status >= 0 && '${{ env.EXTRA }}' || '' }}",
               "btnOrientation": "1",
               "btns": [{
                 "title": "查看项目",
