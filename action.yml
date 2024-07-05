@@ -14,15 +14,17 @@ inputs:
     required: true
     default: -1
 
+env:
+  color: ${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}
+  status_name: ${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}
+  extra: ${{ inputs.status >= 0 && '  \n**耗时**: 1分钟' || '' }}
+
 runs:
   using: composite
   steps:
     - name: Sending Dingtalk Robot Message
       uses: x-actions/dingtalk@master
       env:
-        color: ${{ inputs.status < 0 && '#FF9900' || (inputs.status == 0 && '#33CC00' || '#FF3333') }}
-        status_name: ${{ inputs.status < 0 && '启动' || (inputs.status == 0 && '执行成功' || '执行失败') }}
-        extra: ${{ inputs.status >= 0 && '  \n**耗时**: 1分钟' || '' }}
         DINGTALK_ACCESS_TOKEN: ${{ inputs.token }}
         MSGTYPE: actionCard
         TITLE: "CI任务${{ status_name }}通知"
