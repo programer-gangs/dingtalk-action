@@ -25,7 +25,8 @@ runs:
           start_time=${{ env.START_TIME }}
           end_time=$(date +%s)
           seconds=$((end_time - start_time))
-          echo "EXTRA=  \n耗时: **$[seconds/60]分$[seconds%60]秒**" >> $GITHUB_ENV
+          echo "EXTRA='  \n耗时: **$[seconds/60]分$[seconds%60]秒**'" >> $GITHUB_ENV
+          echo "${{ env.EXTRA }}"
         fi
       shell: bash
     - name: Sending Dingtalk Robot Message
