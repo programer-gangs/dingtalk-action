@@ -18,3 +18,8 @@ jobs:
         uses: ./
         with:
           token: 9ed506ea97a847cbfcc00b435f749a30e13cc5585a827332748853a9070ad8bc
+      - name: Sending Dingtalk Message
+        uses: ./
+        with:
+          token: 9ed506ea97a847cbfcc00b435f749a30e13cc5585a827332748853a9070ad8bc
+          status: ${{ job.status }}
